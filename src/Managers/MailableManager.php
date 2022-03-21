@@ -49,7 +49,7 @@ class MailableManager implements MailManagerInterface
                     'recipients' =>  $event->data['__mail_manager_recipients'] ?? [],
                     'subject'  => $event->data['__mail_manager_subject'] ?? '',
                     'mailable_name' => $event->data['__mail_manager_mailable_name'] ?? '',
-                    'mailable' => $mailable_content ?? null,
+                    'mailable' => $event->data['__mail_manager_mailable'] ?? null,
                     'is_queued' => $event->data['__mail_manager_queued'] ?? false,
                     'is_sent' => false,
                     'tries' => 1

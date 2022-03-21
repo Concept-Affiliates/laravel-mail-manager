@@ -50,7 +50,7 @@ class NotificationManager implements MailManagerInterface
                 'recipients' => $recipients,
                 'subject'  =>$event->notification->toMail($event->notifiable)->subject,
                 'mailable_name' => get_class($event->notification),
-                'mailable' => $mailable_content,
+                'mailable' => serialize(clone $event->notification),
                 'is_queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
                 'is_notification' => true,
                 'notifiable' => serialize(clone $event->notifiable),
