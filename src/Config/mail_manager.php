@@ -18,6 +18,6 @@ return [
      * from being tracked by the mail manager
      */
     'ignore' => [
-        // ForgotPasswordMailable::class
+        EmailForQueuing::class
     ],
 ];
