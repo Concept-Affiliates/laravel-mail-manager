@@ -36,21 +36,19 @@ class NotificationManager implements MailManagerInterface
                 $recipients = [ $event->notifiable->routeNotificationFor('mail') ];
             }
 
-			/*
 			// SM21032022
 			// Null out mailable_content for App\Mail\EmailForQueuing as it's causing max_allowed_packet error on mysql
 			$mailable_content = serialize(clone $event->notification);
 			if (get_class($event->notification) == 'App\Mail\EmailForQueuing') {
-				$mailable_content = null;
+				$mailable_content = '';
 			}
-			*/
 
             MailManagerMail::create([
                 'uuid' => $event->notification->id,
                 'recipients' => $recipients,
                 'subject'  =>$event->notification->toMail($event->notifiable)->subject,
                 'mailable_name' => get_class($event->notification),
-                'mailable' => serialize(clone $event->notification),
+                'mailable' => $mailable_content,
                 'is_queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
                 'is_notification' => true,
                 'notifiable' => serialize(clone $event->notifiable),

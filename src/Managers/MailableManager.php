@@ -35,21 +35,19 @@ class MailableManager implements MailManagerInterface
 
             } else {
 
-                /*
 				// SM21032022
-				// Null out mailable_content for App\Mail\EmailForQueuing as it's causing max_allowed_packet error on mysql
+				// Clear out mailable_content for App\Mail\EmailForQueuing as it's causing max_allowed_packet error on mysql
 				$mailable_content = $event->data['__mail_manager_mailable'];
 				if ($event->data['__mail_manager_mailable_name'] == 'App\Mail\EmailForQueuing') {
-					$mailable_content = null;
+					$mailable_content = '';
 				}
-				*/
 
 				MailManagerMail::create([
                     'uuid' => $event->data['__mail_manager_uuid'],
                     'recipients' =>  $event->data['__mail_manager_recipients'] ?? [],
                     'subject'  => $event->data['__mail_manager_subject'] ?? '',
                     'mailable_name' => $event->data['__mail_manager_mailable_name'] ?? '',
-                    'mailable' => $event->data['__mail_manager_mailable'] ?? null,
+                    'mailable' => $mailable_content,
                     'is_queued' => $event->data['__mail_manager_queued'] ?? false,
                     'is_sent' => false,
                     'tries' => 1
